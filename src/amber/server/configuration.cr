@@ -6,7 +6,7 @@ module Amber
       def self.instance
         @@instance ||= new
       end
-      
+
       # Configure should probably be deprecated in favor of settings.
       def self.configure
         with settings yield settings
@@ -46,6 +46,10 @@ module Amber
 
       def self.redis_url
         settings.redis_url
+      end
+
+      def self.filter_parameters
+        settings.filter_parameters
       end
     end
   end

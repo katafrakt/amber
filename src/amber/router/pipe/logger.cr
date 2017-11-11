@@ -17,7 +17,7 @@ module Amber
         status = context.response.status_code
         elapsed = elapsed_text(Time.now - time)
         @io.puts "#{http_status(status)} | #{method(context)} #{path(context)} | #{elapsed}"
-        @io.puts "Params: #{colorize(context.params.to_s, :yellow)}"
+        @io.puts "Params: #{colorize(filtered_params_hash(context.params), :yellow)}"
         context
       end
 
@@ -37,6 +37,14 @@ module Amber
           text = colorize("404 ", :red)
         end
         "#{text}"
+      end
+
+      private def filtered_params_hash(params)
+        params_hash = params.to_h
+        Amber::Server.settings.filter_parameters.each do |param|
+          params.keys.each { |k| params_hash[k] = "[FILTERED]" if params_hash[k].includes?(param) }
+        end
+        params_hash
       end
 
       private def elapsed_text(elapsed)
