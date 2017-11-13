@@ -21,9 +21,9 @@ module Amber
     property ssl_cert_file : String? = nil
     property redis_url = ""
     property session : Hash(Symbol, Symbol | String | Int32)
-
-    # Loads environment yml settings from the current AMBER_ENV environment variable
-    # and defaults to development environment
-    {{ run("../scripts/environment_loader.cr") }}
   end
 end
+
+# Loads environment yml settings from the current AMBER_ENV environment variable
+# and defaults to development environment
+{{ run("../scripts/environment_loader.cr") }}
